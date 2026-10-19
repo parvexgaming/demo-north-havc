@@ -29,7 +29,7 @@ export function SiteHeader() {
       <header className="sticky top-0 z-40 border-b border-border bg-card/95 backdrop-blur-sm">
         <div className="container-site flex h-20 items-center justify-between gap-6">
           <Link to="/" hash="top" aria-label={`${business.name} home`} className="shrink-0">
-            <img src={logo.url} alt={`${business.name} logo`} width={504} height={188} className="h-14 w-auto mix-blend-multiply" />
+            <img src={logo.url} alt={`${business.name} logo`} width={504} height={188} className="h-14 w-auto" />
           </Link>
           <nav aria-label="Main" className="hidden lg:block">
             <ul className="flex items-center gap-6 text-sm font-semibold">

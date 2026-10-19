@@ -16,7 +16,7 @@ export function SiteFooter() {
       <div className="container-site grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1.2fr]">
         <div>
           <div className="inline-block rounded-sm bg-card p-2">
-            <img src={logo.url} alt={`${business.name} logo`} width={504} height={188} loading="lazy" className="h-12 w-auto mix-blend-multiply" />
+            <img src={logo.url} alt={`${business.name} logo`} width={504} height={188} loading="lazy" className="h-12 w-auto" />
           </div>
           <p className="mt-4 font-display font-bold">{business.name}</p>
           <p className="mt-2 max-w-sm text-sm text-ink-foreground/70">
