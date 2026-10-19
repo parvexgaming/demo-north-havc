@@ -16,6 +16,7 @@ export type Database = {
     Tables: {
       estimate_requests: {
         Row: {
+          contact_method: string
           created_at: string
           email: string
           id: string
@@ -26,6 +27,7 @@ export type Database = {
           service: string
         }
         Insert: {
+          contact_method?: string
           created_at?: string
           email: string
           id?: string
@@ -36,6 +38,7 @@ export type Database = {
           service: string
         }
         Update: {
+          contact_method?: string
           created_at?: string
           email?: string
           id?: string

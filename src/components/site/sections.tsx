@@ -1,5 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
+import { useServerFn } from "@tanstack/react-start";
+import { submitEstimate } from "@/lib/estimate.functions";
 import {
   ArrowRight, Building2, Check, Clock, FileBadge, Fan, Mail, MapPin, Phone, Shovel, Wind,
 } from "lucide-react";
@@ -292,11 +294,13 @@ type Errors = Partial<Record<"name" | "phone" | "email" | "service" | "message",
 
 export function Contact() {
   const [errors, setErrors] = useState<Errors>({});
-  const [status, setStatus] = useState<"idle" | "demo">("idle");
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const send = useServerFn(submitEstimate);
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const f = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const f = new FormData(form);
     const v = (k: string) => String(f.get(k) ?? "").trim();
     const next: Errors = {};
     if (!v("name")) next.name = "Please enter your full name.";
@@ -305,7 +309,19 @@ export function Contact() {
     if (!v("service")) next.service = "Please choose a service type.";
     if (v("message").length < 10) next.message = "Please describe your issue or project (at least 10 characters).";
     setErrors(next);
-    if (Object.keys(next).length === 0) setStatus("demo");
+    if (Object.keys(next).length > 0) return;
+    setStatus("sending");
+    try {
+      const res = await send({
+        data: {
+          name: v("name"), phone: v("phone"), email: v("email"),
+          service: v("service") as never, contactMethod: (v("contactMethod") || "Phone") as never, message: v("message"),
+        },
+      });
+      if (res.ok) { setStatus("sent"); form.reset(); } else setStatus("error");
+    } catch {
+      setStatus("error");
+    }
   };
 
   const field = "mt-1.5 w-full rounded-sm border border-input bg-card px-3 py-2.5 text-sm";
@@ -324,50 +340,17 @@ export function Contact() {
           </ul>
         </div>
         <form name="estimate-request" method="POST" noValidate onSubmit={onSubmit} className="bg-card p-6 shadow-card md:p-8">
-          <p className="mb-6 border-l-4 border-accent bg-secondary px-4 py-3 text-sm text-muted-foreground">Demo form — this preview is not yet accepting live inquiries. Please use test information only.</p>
-          <div className="grid gap-5 sm:grid-cols-2">
-            <div className="sm:col-span-2">
-              <label htmlFor="name" className="text-sm font-semibold">Full name *</label>
-              <input id="name" name="name" autoComplete="name" className={field} aria-invalid={!!errors.name} aria-describedby={errors.name ? "name-error" : undefined} />
-              <Err k="name" />
-            </div>
-            <div>
-              <label htmlFor="phone" className="text-sm font-semibold">Phone number *</label>
-              <input id="phone" name="phone" type="tel" autoComplete="tel" className={field} aria-invalid={!!errors.phone} aria-describedby={errors.phone ? "phone-error" : undefined} />
-              <Err k="phone" />
-            </div>
-            <div>
-              <label htmlFor="email" className="text-sm font-semibold">Email address *</label>
-              <input id="email" name="email" type="email" autoComplete="email" className={field} aria-invalid={!!errors.email} aria-describedby={errors.email ? "email-error" : undefined} />
-              <Err k="email" />
-            </div>
-            <div>
-              <label htmlFor="service" className="text-sm font-semibold">Service type *</label>
-              <select id="service" name="service" defaultValue="" className={field} aria-invalid={!!errors.service} aria-describedby={errors.service ? "service-error" : undefined}>
-                <option value="" disabled>Select a service</option>
-                {["HVAC Repair", "HVAC Tune-Up", "Indoor Air Quality", "Excavation", "Other"].map((o) => <option key={o}>{o}</option>)}
-              </select>
-              <Err k="service" />
-            </div>
-            <fieldset>
-              <legend className="text-sm font-semibold">Preferred contact method</legend>
-              <div className="mt-2.5 flex gap-5 text-sm">
-                {["Phone", "Email"].map((m) => (
-                  <label key={m} className="flex items-center gap-2"><input type="radio" name="contactMethod" value={m} defaultChecked={m === "Phone"} className="accent-primary" />{m}</label>
-                ))}
-              </div>
-            </fieldset>
-            <div className="sm:col-span-2">
-              <label htmlFor="message" className="text-sm font-semibold">Describe the issue or project *</label>
-              <textarea id="message" name="message" rows={5} className={field} aria-invalid={!!errors.message} aria-describedby={errors.message ? "message-error" : undefined} />
-              <Err k="message" />
-            </div>
-          </div>
-          <Button type="submit" variant="navy" size="lg" className="mt-6 w-full sm:w-auto">Request an Estimate</Button>
+...
+          <Button type="submit" variant="navy" size="lg" disabled={status === "sending"} className="mt-6 w-full sm:w-auto">{status === "sending" ? "Sending…" : "Request an Estimate"}</Button>
           <div aria-live="polite">
-            {status === "demo" && (
-              <p className="mt-5 border border-border bg-secondary p-4 text-sm">
-                Thanks — your entry looks complete. This is a demonstration form, so <strong>nothing was sent</strong>. For now, please call {business.phone} (demo number).
+            {status === "sent" && (
+              <p className="mt-5 border-l-4 border-accent bg-secondary p-4 text-sm animate-in fade-in slide-in-from-bottom-2">
+                <strong>Thank you — your request was received.</strong> We'll contact you soon to discuss your project.
+              </p>
+            )}
+            {status === "error" && (
+              <p className="mt-5 border-l-4 border-destructive bg-secondary p-4 text-sm text-destructive">
+                Sorry, we couldn't send your request. Please try again or call {business.phone}.
               </p>
             )}
           </div>
