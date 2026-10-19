@@ -1,0 +1,1 @@
+ALTER TABLE public.estimate_requests ADD COLUMN contact_method text NOT NULL DEFAULT 'Phone' CHECK (contact_method IN ('Phone','Email'));
