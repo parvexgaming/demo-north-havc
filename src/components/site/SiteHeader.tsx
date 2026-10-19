@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { Menu, Phone, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { business } from "@/config/business";
-import logo from "@/assets/northwest-logo.png.asset.json";
+import logo from "@/assets/northwest-logo-bg rem.png";
 
 export const navItems = [
   { label: "Home", to: "/" },
