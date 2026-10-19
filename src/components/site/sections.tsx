@@ -90,7 +90,7 @@ export function Services() {
       <div className="container-site">
         <SectionHead eyebrow="Our Services" title="One Local Team. Multiple Essential Services." text="From indoor comfort and cleaner air to outdoor site preparation, our team provides practical solutions for residential and commercial properties." />
 
-        <article id="hvac" className="mt-14 grid scroll-mt-28 gap-10 border-t border-border pt-12 lg:grid-cols-[1.2fr_1fr] lg:items-center">
+        <article id="hvac" className="reveal mt-14 grid scroll-mt-28 gap-10 border-t border-border pt-12 lg:grid-cols-[1.2fr_1fr] lg:items-center">
           <img src={hero} alt="Technician servicing a residential air conditioner" width={1600} height={1008} loading="lazy" className="aspect-[16/10] w-full rounded-sm object-cover" />
           <div>
             <p className="font-display text-sm font-bold text-muted-foreground">01</p>
@@ -102,7 +102,7 @@ export function Services() {
         </article>
 
         <div className="mt-16 grid gap-6 lg:grid-cols-2">
-          <article id="air-quality" className="scroll-mt-28 bg-card p-8 shadow-card">
+          <article id="air-quality" className="reveal scroll-mt-28 bg-card p-8 shadow-card transition-transform duration-300 hover:-translate-y-1">
             <img src={airQuality} alt="Technician installing a pleated 4-inch filter into an air handler" width={1200} height={912} loading="lazy" className="aspect-[4/3] w-full rounded-sm object-cover" />
             <p className="mt-6 font-display text-sm font-bold text-muted-foreground">02</p>
             <h3 className="mt-2 text-2xl font-extrabold">Indoor Air Quality</h3>
@@ -110,7 +110,7 @@ export function Services() {
             <List items={["Whole-home air purification", "Air filtration", "UV air treatment systems", "Dehumidification", "Exhaust ventilation", "Attic insulation & ductwork solutions"]} />
             <Button asChild variant="outlineDark" size="lg" className="mt-7"><Link to="/indoor-air-quality">Explore Air Quality Solutions <ArrowRight /></Link></Button>
           </article>
-          <article id="excavation" className="flex scroll-mt-28 flex-col bg-primary p-8 text-primary-foreground">
+          <article id="excavation" className="reveal flex scroll-mt-28 flex-col bg-primary transition-transform duration-300 hover:-translate-y-1 p-8 text-primary-foreground">
             <img src={excavation} alt="Compact excavator trenching on a rocky Hill Country lot" width={1200} height={912} loading="lazy" className="aspect-[4/3] w-full rounded-sm object-cover" />
             <p className="mt-6 font-display text-sm font-bold text-primary-foreground/60">03</p>
             <h3 className="mt-2 text-2xl font-extrabold">Excavation &amp; Site Preparation</h3>
@@ -187,7 +187,7 @@ export function Products() {
         </div>
         <ul className="mt-12 grid border-l border-t border-border sm:grid-cols-2 lg:grid-cols-4">
           {products.map(({ name, d, icon: I }) => (
-            <li key={name} className="flex flex-col border-b border-r border-border bg-card p-6">
+            <li key={name} className="reveal flex flex-col border-b border-r border-border bg-card p-6 transition-colors hover:bg-secondary">
               <I className="size-6 text-accent" aria-hidden />
               <h3 className="mt-4 font-display text-lg font-bold">{name}</h3>
               <p className="mt-2 flex-1 text-sm text-muted-foreground">{d}</p>
@@ -231,7 +231,7 @@ export function Process() {
         <SectionHead eyebrow="Process" title="Getting Started Is Simple" />
         <ol className="mt-12 grid gap-10 md:grid-cols-3">
           {steps.map(([t, d], i) => (
-            <li key={t} className="border-t-2 border-primary pt-6">
+            <li key={t} className="reveal border-t-2 border-primary pt-6">
               <span className="font-display text-4xl font-extrabold text-accent">0{i + 1}</span>
               <h3 className="mt-3 text-xl font-bold">{t}</h3>
               <p className="mt-2 text-muted-foreground">{d}</p>

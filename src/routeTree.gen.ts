@@ -10,11 +10,41 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as ExcavationRouteImport } from './routes/excavation'
+import { Route as HvacServicesRouteImport } from './routes/hvac-services'
+import { Route as IndoorAirQualityRouteImport } from './routes/indoor-air-quality'
 import { Route as LegalSlugRouteImport } from './routes/legal.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExcavationRoute = ExcavationRouteImport.update({
+  id: '/excavation',
+  path: '/excavation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HvacServicesRoute = HvacServicesRouteImport.update({
+  id: '/hvac-services',
+  path: '/hvac-services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IndoorAirQualityRoute = IndoorAirQualityRouteImport.update({
+  id: '/indoor-air-quality',
+  path: '/indoor-air-quality',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LegalSlugRoute = LegalSlugRouteImport.update({
@@ -25,27 +55,69 @@ const LegalSlugRoute = LegalSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
+  '/excavation': typeof ExcavationRoute
+  '/hvac-services': typeof HvacServicesRoute
+  '/indoor-air-quality': typeof IndoorAirQualityRoute
   '/legal/$slug': typeof LegalSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
+  '/excavation': typeof ExcavationRoute
+  '/hvac-services': typeof HvacServicesRoute
+  '/indoor-air-quality': typeof IndoorAirQualityRoute
   '/legal/$slug': typeof LegalSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
+  '/excavation': typeof ExcavationRoute
+  '/hvac-services': typeof HvacServicesRoute
+  '/indoor-air-quality': typeof IndoorAirQualityRoute
   '/legal/$slug': typeof LegalSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/legal/$slug'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/excavation'
+    | '/hvac-services'
+    | '/indoor-air-quality'
+    | '/legal/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/legal/$slug'
-  id: '__root__' | '/' | '/legal/$slug'
+  to:
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/excavation'
+    | '/hvac-services'
+    | '/indoor-air-quality'
+    | '/legal/$slug'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/excavation'
+    | '/hvac-services'
+    | '/indoor-air-quality'
+    | '/legal/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  ContactRoute: typeof ContactRoute
+  ExcavationRoute: typeof ExcavationRoute
+  HvacServicesRoute: typeof HvacServicesRoute
+  IndoorAirQualityRoute: typeof IndoorAirQualityRoute
   LegalSlugRoute: typeof LegalSlugRoute
 }
 
@@ -56,6 +128,41 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/excavation': {
+      id: '/excavation'
+      path: '/excavation'
+      fullPath: '/excavation'
+      preLoaderRoute: typeof ExcavationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hvac-services': {
+      id: '/hvac-services'
+      path: '/hvac-services'
+      fullPath: '/hvac-services'
+      preLoaderRoute: typeof HvacServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/indoor-air-quality': {
+      id: '/indoor-air-quality'
+      path: '/indoor-air-quality'
+      fullPath: '/indoor-air-quality'
+      preLoaderRoute: typeof IndoorAirQualityRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/legal/$slug': {
@@ -70,6 +177,11 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  ContactRoute: ContactRoute,
+  ExcavationRoute: ExcavationRoute,
+  HvacServicesRoute: HvacServicesRoute,
+  IndoorAirQualityRoute: IndoorAirQualityRoute,
   LegalSlugRoute: LegalSlugRoute,
 }
 export const routeTree = rootRouteImport
