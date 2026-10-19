@@ -27,7 +27,7 @@ export function SiteFooter() {
           <p className="eyebrow">Explore</p>
           <ul className="mt-4 space-y-2 text-sm">
             {navItems.slice(1).map((n) => (
-              <li key={n.hash}><Link to="/" hash={n.hash} className="text-ink-foreground/80 hover:text-accent">{n.label}</Link></li>
+              <li key={n.to}><Link to={n.to} className="text-ink-foreground/80 hover:text-accent">{n.label}</Link></li>
             ))}
           </ul>
         </nav>

@@ -6,13 +6,13 @@ import { business } from "@/config/business";
 import logo from "@/assets/northwest-logo.png.asset.json";
 
 export const navItems = [
-  { label: "Home", hash: "top" },
-  { label: "HVAC Services", hash: "hvac" },
-  { label: "Indoor Air Quality", hash: "air-quality" },
-  { label: "Excavation", hash: "excavation" },
-  { label: "About Us", hash: "about" },
-  { label: "Contact", hash: "contact" },
-];
+  { label: "Home", to: "/" },
+  { label: "HVAC Services", to: "/hvac-services" },
+  { label: "Indoor Air Quality", to: "/indoor-air-quality" },
+  { label: "Excavation", to: "/excavation" },
+  { label: "About Us", to: "/about" },
+  { label: "Contact", to: "/contact" },
+] as const;
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
@@ -28,21 +28,21 @@ export function SiteHeader() {
       </div>
       <header className="sticky top-0 z-40 border-b border-border bg-card/95 backdrop-blur-sm">
         <div className="container-site flex h-20 items-center justify-between gap-6">
-          <Link to="/" hash="top" aria-label={`${business.name} home`} className="shrink-0">
+          <Link to="/" aria-label={`${business.name} home`} className="shrink-0">
             <img src={logo.url} alt={`${business.name} logo`} width={504} height={188} className="h-14 w-auto" />
           </Link>
           <nav aria-label="Main" className="hidden lg:block">
             <ul className="flex items-center gap-6 text-sm font-semibold">
               {navItems.map((n) => (
-                <li key={n.hash}>
-                  <Link to="/" hash={n.hash} className="text-foreground/80 hover:text-primary">{n.label}</Link>
+                <li key={n.to}>
+                  <Link to={n.to} activeOptions={{ exact: true }} activeProps={{ className: "text-primary border-b-2 border-accent" }} className="pb-1 text-foreground/80 transition-colors hover:text-primary">{n.label}</Link>
                 </li>
               ))}
             </ul>
           </nav>
           <div className="hidden items-center gap-4 lg:flex">
             <Button asChild variant="navy" size="lg">
-              <Link to="/" hash="contact">Request an Estimate</Link>
+              <Link to="/contact">Request an Estimate</Link>
             </Button>
           </div>
           <button
@@ -57,15 +57,15 @@ export function SiteHeader() {
           </button>
         </div>
         {open && (
-          <nav id="mobile-nav" aria-label="Mobile" className="border-t border-border bg-card lg:hidden">
+          <nav id="mobile-nav" aria-label="Mobile" className="animate-in fade-in slide-in-from-top-2 duration-200 border-t border-border bg-card lg:hidden">
             <ul className="container-site flex flex-col py-3">
               {navItems.map((n) => (
-                <li key={n.hash}>
-                  <Link to="/" hash={n.hash} onClick={() => setOpen(false)} className="block py-3 font-semibold">{n.label}</Link>
+                <li key={n.to}>
+                  <Link to={n.to} onClick={() => setOpen(false)} className="block py-3 font-semibold">{n.label}</Link>
                 </li>
               ))}
               <li className="flex flex-col gap-2 pt-3">
-                <Button asChild variant="navy" size="lg"><Link to="/" hash="contact" onClick={() => setOpen(false)}>Request an Estimate</Link></Button>
+                <Button asChild variant="navy" size="lg"><Link to="/contact" onClick={() => setOpen(false)}>Request an Estimate</Link></Button>
                 <Button asChild variant="outlineDark" size="lg"><a href={business.phoneHref}>Call {business.phone}</a></Button>
               </li>
             </ul>
